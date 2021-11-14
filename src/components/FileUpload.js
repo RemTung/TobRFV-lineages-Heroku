@@ -3,10 +3,12 @@
 
 import React, {useState} from 'react';
 import axios from 'axios';
+import {Progress} from 'reactstrap';
 
 function FileUpload(props) {
   const [selectedFile, setSelectedFile] = useState();
   const [isFilePicked, setIsFilePicked] = useState(false);
+  const [loaded, setLoaded] = useState(0);
 
   const changeHandler = (event) => {
     // event.target.files is an object that contains the details of the files selected
@@ -15,14 +17,17 @@ function FileUpload(props) {
   };
 
   const handleSubmission = () => {
-    const data = new FormData();
-    data.append('file', selectedFile);
-    axios.post("http://localhost:8000/upload", data, {})
-         .then(res => { 
-                 console.log(res.statusText)
-               })
+    if (isFilePicked) {
+      const data = new FormData();
+      data.append('file', selectedFile);
+      axios.post("http://localhost:8000/upload", data, {
+        onUploadProgress: ProgressEvent => {
+          setLoaded(ProgressEvent.loaded / ProgressEvent.total*100);
+        }
+      })
+      .then(res => {console.log(res.statusText)})
+    }
   };
-
 
   return (
     <div className="container">
@@ -34,8 +39,15 @@ function FileUpload(props) {
             <input type="file" name="file" 
                    className="form-contr" onChange={changeHandler} />
           </div>
+
+          <Progress max="100" 
+                      color="success" 
+                      value={loaded}>
+              {Math.round(loaded,2)}%
+            </Progress>
+
           <button type="button" 
-                  className="btn btn-success btn-block"
+                  className="btn btn-primary btn-block"
                   onClick={handleSubmission}>
             Upload
           </button>
