@@ -2,6 +2,7 @@
 // see https://programmingwithmosh.com/javascript/react-file-upload-proper-server-side-nodejs-easy/ for help
 
 import React, {useState} from 'react';
+import axios from 'axios';
 
 function FileUpload(props) {
   const [selectedFile, setSelectedFile] = useState();
@@ -14,8 +15,12 @@ function FileUpload(props) {
   };
 
   const handleSubmission = () => {
-    // const data = new FormData();
-    // data.append('file', selectedFile);
+    const data = new FormData();
+    data.append('file', selectedFile);
+    axios.post("http://localhost:8000/upload", data, {})
+         .then(res => { 
+                 console.log(res.statusText)
+               })
   };
 
 
