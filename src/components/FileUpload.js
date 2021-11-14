@@ -1,6 +1,7 @@
 // see https://www.pluralsight.com/guides/uploading-files-with-reactjs for help
+// see https://programmingwithmosh.com/javascript/react-file-upload-proper-server-side-nodejs-easy/ for help
 
-import React, {useState} from 'react'
+import React, {useState} from 'react';
 
 function FileUpload(props) {
   const [selectedFile, setSelectedFile] = useState();
@@ -12,21 +13,29 @@ function FileUpload(props) {
     setIsFilePicked(true);
   };
 
-  const handleSubmission = () => {};
+  const handleSubmission = () => {
+    // const data = new FormData();
+    // data.append('file', selectedFile);
+  };
+
 
   return (
-    <div>
-      <h3>Upload your fasta file here</h3>
-      <input type="file" name="file" onChange={changeHandler} />
-      {isFilePicked && (
-        <div>
-          <p>Filename: {selectedFile.name}</p>
-          <p>Filetype: {selectedFile.type}</p>
-          <p>Size: {selectedFile.size} bytes</p>
+    <div className="container">
+      <div className="row">
+        <div className="offset-md-3 col-md-6">
+
+          <div className="form-group files">
+            <label>Upload your fasta file here</label>
+            <input type="file" name="file" 
+                   className="form-contr" onChange={changeHandler} />
+          </div>
+          <button type="button" 
+                  className="btn btn-success btn-block"
+                  onClick={handleSubmission}>
+            Upload
+          </button>
+
         </div>
-      )}
-      <div>
-        <button onClick={handleSubmission}>Submit</button>
       </div>
     </div>
   );
