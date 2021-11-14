@@ -21,11 +21,11 @@ function FileUpload(props) {
 
   return (
     <div className="container">
+      <h3>Upload your fasta file here</h3>
       <div className="row">
         <div className="offset-md-3 col-md-6">
 
           <div className="form-group files">
-            <label>Upload your fasta file here</label>
             <input type="file" name="file" 
                    className="form-contr" onChange={changeHandler} />
           </div>

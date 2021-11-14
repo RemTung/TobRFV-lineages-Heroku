@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+h3 {
+  color: #456572;
+}
+
 /* css for FileUpload */
 .files input {
   outline: 2px dashed #92b0b3;

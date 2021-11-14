@@ -52,10 +52,11 @@ function Phylogeny(props) {
   }, []);
  
   return (    
-    <div>
+    <div className="container">
       <h3>Phylogenetic Tree</h3>
-      <div className="containerToBeFilledWithCanvas">
-        <PhylogenyTree
+      <div className="row">
+        <div className="offset-md-3 col-md-6">
+        <PhylogenyTree 
             newick={newick}
             options={options}
             hooks={hooks}
@@ -63,6 +64,7 @@ function Phylogeny(props) {
             interactive={true}
             zoom
           />
+        </div>
       </div>
     </div>
   )
