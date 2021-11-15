@@ -12,14 +12,16 @@ function FileUpload(props) {
 
   const changeHandler = (event) => {
     // event.target.files is an object that contains the details of the files selected
-    setSelectedFile(event.target.files[0]);
+    setSelectedFile(event.target.files);
     setIsFilePicked(true);
   };
 
   const handleSubmission = () => {
     if (isFilePicked) {
       const data = new FormData();
-      data.append('file', selectedFile);
+      for (var i = 0; i < selectedFile.length; i++) {
+        data.append('file', selectedFile[i]);
+      }
       axios.post("http://localhost:8000/upload", data, {
         onUploadProgress: ProgressEvent => {
           setLoaded(ProgressEvent.loaded / ProgressEvent.total*100);
@@ -36,7 +38,7 @@ function FileUpload(props) {
         <div className="offset-md-3 col-md-6">
 
           <div className="form-group files">
-            <input type="file" name="file" 
+            <input type="file" name="file" multiple
                    className="form-contr" onChange={changeHandler} />
           </div>
 
