@@ -4,6 +4,8 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import {Progress} from 'reactstrap';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function FileUpload(props) {
   const [selectedFile, setSelectedFile] = useState();
@@ -12,8 +14,11 @@ function FileUpload(props) {
 
   const changeHandler = (event) => {
     // event.target.files is an object that contains the details of the files selected
-    setSelectedFile(event.target.files);
-    setIsFilePicked(true);
+    const files = event.target.files;
+    if (checkFileType(event)) {
+      setSelectedFile(files);
+      setIsFilePicked(true);
+    }
   };
 
   const handleSubmission = () => {
@@ -27,13 +32,34 @@ function FileUpload(props) {
           setLoaded(ProgressEvent.loaded / ProgressEvent.total*100);
         }
       })
-      .then(res => {console.log(res.statusText)})
+      .then(res => {toast.success('upload success')})
+      .catch(err => {toast.error('upload fail')});
     }
   };
+
+  const checkFileType = (event) => {
+    const files = event.target.files;
+    let err = '';
+    for (var i = 0; i < files.length; i++) {
+      if (files[i].name.split('.').pop() !== "fasta") {
+        err = 'please upload fasta files';
+      }
+    }
+
+    if (err !== '') {
+      event.target.value = null;
+      toast.error('Please upload fasta files');
+      return false;
+    }
+    return true;
+  }
 
   return (
     <div className="container">
       <h3>Upload your fasta file here</h3>
+      <div class="form-group">
+        <ToastContainer />
+      </div>
       <div className="row">
         <div className="offset-md-3 col-md-6">
 
