@@ -1,12 +1,14 @@
 ### How to run the program locally?
 
 1. Install UShER using docker
+
    git clone https://github.com/yatisht/usher.git
    cd usher
    docker build --no-cache -t usher install/
    docker run -p 8000:8000 -v "<{the directory you downloaded the program}\ToBRFV-lineages\public>:/HOME/usher/data" -t -i usher /bin/bash
 
 2. Rename the newly created docker container to "usher"
+
    docker rename <orignal_name> usher
 
 3. Run "npm install"
