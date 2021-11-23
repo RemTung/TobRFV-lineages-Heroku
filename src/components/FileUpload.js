@@ -1,4 +1,3 @@
-// see https://www.pluralsight.com/guides/uploading-files-with-reactjs for help
 // see https://programmingwithmosh.com/javascript/react-file-upload-proper-server-side-nodejs-easy/ for help
 
 import React, {useState} from 'react';
@@ -10,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function FileUpload(props) {
   const [selectedFile, setSelectedFile] = useState();
   const [isFilePicked, setIsFilePicked] = useState(false);
+  const [isFileUploaded, setIsFileUploaded] = useState(false);
   const [loaded, setLoaded] = useState(0);
 
   const changeHandler = (event) => {
@@ -27,13 +27,24 @@ function FileUpload(props) {
       for (var i = 0; i < selectedFile.length; i++) {
         data.append('file', selectedFile[i]);
       }
-      axios.post("http://localhost:8000/upload", data, {
+      axios.post("http://localhost:7000/upload", data, {
         onUploadProgress: ProgressEvent => {
           setLoaded(ProgressEvent.loaded / ProgressEvent.total*100);
         }
       })
-      .then(res => {toast.success('upload success')})
-      .catch(err => {toast.error('upload fail')});
+      .then(res => {toast.success('Upload success'); setIsFileUploaded(true);})
+      .catch(err => {toast.error('Upload fail')});      
+    }
+  };
+
+  const handleAnalysis = () => {
+    if (isFileUploaded) {
+      toast.success('Start analyzing');
+      fetch('http://localhost:7000/')
+      .then(res => {toast.success('Analysis done')})
+      .catch(err => {toast.error('A error occured.')});
+    } else {
+      toast.error('Please upload a file first');
     }
   };
 
@@ -57,7 +68,7 @@ function FileUpload(props) {
   return (
     <div className="container">
       <h3>Upload your fasta file here</h3>
-      <div class="form-group">
+      <div className="form-group">
         <ToastContainer />
       </div>
       <div className="row">
@@ -75,13 +86,20 @@ function FileUpload(props) {
             </Progress>
 
           <button type="button" 
-                  className="btn btn-primary btn-block"
+                  className="btn btn-success btn-block"
                   onClick={handleSubmission}>
             Upload
           </button>
 
         </div>
       </div>
+
+      <button type="button" 
+              className="btn btn-primary btn-block"
+              onClick={handleAnalysis}>
+            Start analysis
+      </button>
+
     </div>
   );
 }
