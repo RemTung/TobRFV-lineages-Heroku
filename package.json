@@ -24,8 +24,8 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
-    "start": "concurrently --kill-others \"node server\" \"react-scripts start\" \"auspice view --datasetDir auspice\"",
-    "build": "react-scripts build",
+    "start": "npm run build && concurrently --kill-others \"node server\" \"react-scripts start\" \"auspice view --datasetDir auspice\"",
+    "build": "rm -rf auspice/update.json public/save.fasta  public/mutation-paths.txt public/placement_stats.tsv public/uncondensed-final-tree.nh public/output",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

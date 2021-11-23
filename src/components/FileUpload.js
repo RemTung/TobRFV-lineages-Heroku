@@ -34,6 +34,8 @@ function FileUpload(props) {
       })
       .then(res => {toast.success('Upload success'); setIsFileUploaded(true);})
       .catch(err => {toast.error('Upload fail')});      
+    } else {
+      toast.error('Please select a file first');
     }
   };
 

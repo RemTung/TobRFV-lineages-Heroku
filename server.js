@@ -4,6 +4,7 @@ var multer = require('multer')
 var cors = require('cors');
 const { exec } = require('child_process');
 const fs = require('fs');
+const newickToAuspiceJson = require('./src/parseNewick');
 
 app.use(cors())
 
@@ -19,7 +20,7 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage }).array('file');
 
 app.get('/', (req, res) => {
-  exec("docker exec usher usher -i ./data/global_assignments.pb -v ./data/calls.vcf.gz -u -d ./data/output/", (error, stdout, stderr) => {
+  exec("docker exec usher usher -i ./data/global_assignments.pb -v ./data/calls.vcf.gz -u -d ./data/", (error, stdout, stderr) => {
     if (error) {
         console.log(`error: ${error.message}`);
         return;
@@ -35,7 +36,13 @@ app.get('/', (req, res) => {
 
 app.get('/tree', (req, res) => {
   try {
-    const content = fs.readFileSync(__dirname + '/public/output/uncondensed-final-tree.nh');
+    const content = fs.readFileSync(__dirname + '/public/uncondensed-final-tree.nh');
+    const auspiceJson = newickToAuspiceJson('tree', content.toString(), 'merged.sorted.bam');
+    fs.writeFileSync(__dirname + '/auspice/update.json', JSON.stringify(auspiceJson), (error) => {
+      if (error) {
+        console.log(error);
+      }
+    });
     return res.end(content.toString());
   } catch (err) {
     return res.end();
