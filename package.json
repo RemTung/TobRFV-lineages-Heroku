@@ -25,7 +25,7 @@
   },
   "scripts": {
     "start": "npm run build && concurrently --kill-others \"node server\" \"react-scripts start\" \"auspice view --datasetDir auspice\"",
-    "build": "rm -rf auspice/update.json public/save.fasta  public/mutation-paths.txt public/placement_stats.tsv public/uncondensed-final-tree.nh public/output",
+    "build": "rm -rf auspice/update.json public/save.fasta  public/mutation-paths.txt public/placement_stats.tsv public/uncondensed-final-tree.nh",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

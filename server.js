@@ -19,6 +19,7 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage }).array('file');
 
+// run the usher command; create output files in './public'
 app.get('/', (req, res) => {
   exec("docker exec usher usher -i ./data/global_assignments.pb -v ./data/calls.vcf.gz -u -d ./data/", (error, stdout, stderr) => {
     if (error) {
@@ -34,6 +35,8 @@ app.get('/', (req, res) => {
   return res.end();
 }); 
 
+// read './public/uncondensed-final-tree.nh if it exists'
+// write ./auspice/update.json for auspice to display the new tree
 app.get('/tree', (req, res) => {
   try {
     const content = fs.readFileSync(__dirname + '/public/uncondensed-final-tree.nh');
@@ -49,7 +52,34 @@ app.get('/tree', (req, res) => {
   }
 });
 
-app.post('/upload',function(req, res) {
+// clean all newly created files in './public' folder
+// returns './public' folder to its original state
+app.get('/clean', (req, res) => {
+  exec("npm run build", (error, stdout, stderr) => {
+    if (error) {
+        console.log(`error: ${error.message}`);
+        return;
+    }
+    if (stderr) {
+        console.log(`stderr: ${stderr}`);
+        return;
+    }
+  });  
+  return res.end();
+})
+
+// cleans './public' folder and stores the uploaded file in './public' folder
+app.post('/upload', (req, res) => {
+  exec("npm run build", (error, stdout, stderr) => {
+    if (error) {
+        console.log(`error: ${error.message}`);
+        return;
+    }
+    if (stderr) {
+        console.log(`stderr: ${stderr}`);
+        return;
+    }
+  });  
      
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
@@ -57,18 +87,6 @@ app.post('/upload',function(req, res) {
     } else if (err) {
       return res.status(500).json(err)
     }
-
-    exec("docker exec usher usher -i ./data/global_assignments.pb -v ./data/calls.vcf.gz -u -d ./data/output/", (error, stdout, stderr) => {
-      if (error) {
-          console.log(`error: ${error.message}`);
-          return;
-      }
-      if (stderr) {
-          console.log(`stderr: ${stderr}`);
-          return;
-      }
-      console.log(`stdout: ${stdout}`);
-    });  
   
     return res.status(200).send(req.file)
 
