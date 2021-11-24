@@ -68,18 +68,8 @@ app.get('/clean', (req, res) => {
   return res.end();
 })
 
-// cleans './public' folder and stores the uploaded file in './public' folder
+// stores the uploaded file in './public' folder
 app.post('/upload', (req, res) => {
-  exec("npm run build", (error, stdout, stderr) => {
-    if (error) {
-        console.log(`error: ${error.message}`);
-        return;
-    }
-    if (stderr) {
-        console.log(`stderr: ${stderr}`);
-        return;
-    }
-  });  
      
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {

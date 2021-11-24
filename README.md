@@ -35,11 +35,11 @@
 _Note: (a) You need to have the usher container in docker running for this button to work
 (b) For now, it ignores the uploaded fasta and uses './public/calls.vcf' instead. (To be updated)_
 
-4. Click "Update tree". It sends a get request to the express server which reads './public/uncondensed-final-tree' and responds with the newick string. The phylogenetic tree then displays the returned newick string. A new json file named 'update.json' will also appears in './auspice'. It is prepared for auspice to visualize the new tree (see parseNewick.js for details about how the json file is produced).
+4. Click "Update tree". It sends a get request to the express server which reads './public/uncondensed-final-tree' and responds with the newick string. The phylogenetic tree then displays the returned newick string. A new json file named 'update.json' will also appears in './auspice'. It is prepared for auspice to visualize the new tree (see ./src/parseNewick.js for details about how the json file is produced).
 
 5. Click "Visualize with auspice". There should be a new link named "update" which will display the new tree.
 
-6. You can use "npm run build" to clean all the newly created files in './public'
+6. You can go back to the react page and refresh the page so that you can upload another file. By refreshing the page, all newly created files in './public' are deleted. This is necessary if you want to upload a new file.
 
 ### TODO
 

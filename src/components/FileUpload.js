@@ -1,6 +1,6 @@
 // see https://programmingwithmosh.com/javascript/react-file-upload-proper-server-side-nodejs-easy/ for help
 
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {Progress} from 'reactstrap';
 import { ToastContainer, toast } from 'react-toastify';
@@ -10,7 +10,12 @@ function FileUpload(props) {
   const [selectedFile, setSelectedFile] = useState();
   const [isFilePicked, setIsFilePicked] = useState(false);
   const [isFileUploaded, setIsFileUploaded] = useState(false);
+  const [isFileAnalyzed, setIsFileAnalyzed] = useState(false);
   const [loaded, setLoaded] = useState(0);
+
+  // window.onload = () => {
+  //   fetch('http://localhost:7000/clean');
+  // };
 
   const changeHandler = (event) => {
     // event.target.files is an object that contains the details of the files selected
@@ -22,7 +27,9 @@ function FileUpload(props) {
   };
 
   const handleSubmission = () => {
-    if (isFilePicked) {
+    if (isFileUploaded) {
+      toast.error('Already uploaded a file');
+    } else if (isFilePicked) {
       const data = new FormData();
       for (var i = 0; i < selectedFile.length; i++) {
         data.append('file', selectedFile[i]);
@@ -40,10 +47,12 @@ function FileUpload(props) {
   };
 
   const handleAnalysis = () => {
-    if (isFileUploaded) {
+    if (isFileAnalyzed) {
+      toast.error('Already analyzed the file');
+    } else if (isFileUploaded) {
       toast.success('Start analyzing');
       fetch('http://localhost:7000/')
-      .then(res => {toast.success('Analysis done')})
+      .then(res => {toast.success('Analysis done'); setIsFileAnalyzed(true)})
       .catch(err => {toast.error('A error occured.')});
     } else {
       toast.error('Please upload a file first');
@@ -66,6 +75,11 @@ function FileUpload(props) {
     }
     return true;
   }
+
+  // clean './public' when refreshing the page
+  useEffect(() => {
+    fetch('http://localhost:7000/clean');
+  }, [])
 
   return (
     <div className="container">
