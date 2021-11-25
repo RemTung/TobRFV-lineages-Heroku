@@ -45,12 +45,8 @@ _Note: (a) You need to have the usher container in docker running for this butto
 
 1. create a 'help' button on the web page that explains how to use the web app
 
-2. hide the file dropbox after uploading a file
+2. make the tree bigger
 
-3. make the tree bigger
+3. color the newly added node in the new tree
 
-4. color the newly added node in the new tree
-
-5. make the web page look nicer
-
-6. convert fasta to vcf
+4. convert fasta to vcf
