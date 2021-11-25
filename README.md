@@ -8,7 +8,7 @@
 
    docker build --no-cache -t usher install/
 
-   docker run -p 8000:8000 -v "<{the directory you downloaded the program}\ToBRFV-lineages\public>:/HOME/usher/data" -t -i usher /bin/bash
+   docker run -p 8000:8000 -v "{the directory you downloaded the program}\ToBRFV-lineages\public:/HOME/usher/data" -t -i usher /bin/bash
 
 2. Rename the newly created docker container to "usher"
 
