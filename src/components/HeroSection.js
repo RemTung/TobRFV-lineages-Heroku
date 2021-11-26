@@ -16,7 +16,7 @@ function HeroSection() {
           buttonStyle='btn--outline'
           buttonSize='btn--large'
         >
-          UPLOAD
+          UPLOAD    <i class="fas fa-arrow-circle-up"></i>
         </Button>
         <ButtonTwo
           className='btns'
