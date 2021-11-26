@@ -29,8 +29,8 @@ function Navbar() {
       <nav className='navbar'>
         <div className='navbar-container'>
           <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
-            ToBRFV
-            <i class='fab fa-typo3' />
+            ToBRFV 
+            <i class="fas fa-dna" />
           </Link>
           <div className='menu-icon' onClick={handleClick}>
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
@@ -67,10 +67,11 @@ function Navbar() {
                 onClick={closeMobileMenu}
               >
                 Upload
+                <i class="fas fa-file-upload"/>
               </Link>
             </li>
           </ul>
-          {button && <Button buttonStyle='btn--outline'>UPLOAD</Button>}
+          {button && <Button buttonStyle='btn--outline'>UPLOAD   <i class="fas fa-arrow-circle-up"></i></Button>}
         </div>
       </nav>
     </>
