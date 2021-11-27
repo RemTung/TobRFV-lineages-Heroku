@@ -38,11 +38,8 @@ function Phylogeny(props) {
           country: ${details.find(x => x.strain === id).country}<br>
           host: ${details.find(x => x.strain === id).host}<br>
           company type: ${details.find(x => x.strain === id).company_type}<br>
-          major genotype: ${details.find(x => x.strain === id).major_genotype}<br>
           municipality: ${details.find(x => x.strain === id).municipality}<br>
-          state: ${details.find(x => x.strain === id).state}<br>
-          scion: ${details.find(x => x.strain === id).scion}<br>
-          stock: ${details.find(x => x.strain === id).stock}<br>`;
+          state: ${details.find(x => x.strain === id).state}<br>`;
       },
     }),
     [highlighted, subtreeID]
