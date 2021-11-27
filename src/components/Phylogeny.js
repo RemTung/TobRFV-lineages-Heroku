@@ -14,6 +14,7 @@ import 'react-phylogeny-tree/lib/css/zoom.css'; // in next.js css imports might 
 import '@mkoliba/phylogeny-tree-plugin-context-menu/styles.css';
 import '@mkoliba/phylogeny-tree-plugin-interactions/styles.css';
 import { toast } from 'react-toastify';
+import details from '../data/details.js';
  
 const hooks = [useLeafSubtree, useAutoResize];  
  
@@ -29,8 +30,19 @@ function Phylogeny(props) {
       selectedIds: highlighted,
       leafSubtree: { leafID: subtreeID, noLevels: 1, minLeafToRootLength: 0 },
       tooltipContent: (node) => {
-        return `id: ${node.id}<br>
-          branch length: ${node.branchLength}`;
+        const id = node.id;
+        return `id: ${id}<br>
+          branch length: ${node.branchLength}<br>
+          date: ${details.find(x => x.strain === id).date}<br>
+          continent: ${details.find(x => x.strain === id).continent}<br>
+          country: ${details.find(x => x.strain === id).country}<br>
+          host: ${details.find(x => x.strain === id).host}<br>
+          company type: ${details.find(x => x.strain === id).company_type}<br>
+          major genotype: ${details.find(x => x.strain === id).major_genotype}<br>
+          municipality: ${details.find(x => x.strain === id).municipality}<br>
+          state: ${details.find(x => x.strain === id).state}<br>
+          scion: ${details.find(x => x.strain === id).scion}<br>
+          stock: ${details.find(x => x.strain === id).stock}<br>`;
       },
     }),
     [highlighted, subtreeID]
