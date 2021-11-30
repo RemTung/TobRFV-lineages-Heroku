@@ -61,6 +61,7 @@ class PhylocanvasTree extends Component {
         <div className="row">
           <div className="col-10" ref={this.canvasRef} onClick={this.handleSelectNode}/>
           &nbsp;
+          &nbsp;
           <div className="col-3">
             <h3>View details</h3>
             {this.state.detail}

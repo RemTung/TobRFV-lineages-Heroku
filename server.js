@@ -10,7 +10,7 @@ app.use(cors())
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public')
+    cb(null, 'public/temp')
   },
   filename: function (req, file, cb) {
     cb(null, "save." + file.originalname.split(".").pop() )
@@ -19,9 +19,9 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage }).array('file');
 
-// run the usher command; create output files in './public'
+// run the usher command; create output files in './public/temp'
 app.get('/', (req, res) => {
-  exec("docker exec usher usher -i ./data/global_assignments.pb -v ./data/calls.vcf.gz -u -d ./data/", (error, stdout, stderr) => {
+  exec("docker exec usher usher -i ./data/temp/global_assignments.pb -v ./data/temp/save.vcf -u -d ./data/temp/", (error, stdout, stderr) => {
     if (error) {
         console.log(`error: ${error.message}`);
         return;
@@ -35,13 +35,13 @@ app.get('/', (req, res) => {
   return res.end();
 }); 
 
-// read './public/uncondensed-final-tree.nh if it exists'
-// write ./auspice/update.json for auspice to display the new tree
+// read './public/temp/uncondensed-final-tree.nh if it exists'
+// write ./public/temp/update.json for auspice to display the new tree
 app.get('/tree', (req, res) => {
   try {
-    const content = fs.readFileSync(__dirname + '/public/uncondensed-final-tree.nh');
+    const content = fs.readFileSync(__dirname + '/public/temp/uncondensed-final-tree.nh');
     const auspiceJson = newickToAuspiceJson('tree', content.toString(), 'merged.sorted.bam');
-    fs.writeFileSync(__dirname + '/auspice/update.json', JSON.stringify(auspiceJson), (error) => {
+    fs.writeFileSync(__dirname + '/public/temp/update.json', JSON.stringify(auspiceJson), (error) => {
       if (error) {
         console.log(error);
       }
@@ -68,7 +68,7 @@ app.get('/clean', (req, res) => {
   return res.end();
 })
 
-// stores the uploaded file in './public' folder
+// stores the uploaded file in './public/temp' folder
 app.post('/upload', (req, res) => {
      
   upload(req, res, function (err) {

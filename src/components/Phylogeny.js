@@ -1,5 +1,9 @@
 // see https://npm.runkit.com/react-phylogeny-tree for help
 
+// We are no longer using this component
+// To see the implementation of the tree component,
+//   go to ./src/components/PhylocanvasTree.js and ./src/components/pages/tree.js
+
 import React, {useState} from 'react';
  
 // import scaleBarPlugin from '@mkoliba/phylogeny-tree-plugin-scalebar';

@@ -63,14 +63,14 @@ function FileUpload(props) {
     const files = event.target.files;
     let err = '';
     for (var i = 0; i < files.length; i++) {
-      if (files[i].name.split('.').pop() !== "fasta") {
-        err = 'please upload fasta files';
+      if (files[i].name.split('.').pop() !== "vcf") {
+        err = 'please upload vcf files';
       }
     }
 
     if (err !== '') {
       event.target.value = null;
-      toast.error('Please upload fasta files');
+      toast.error('Please upload vcf files');
       return false;
     }
     return true;
@@ -83,7 +83,7 @@ function FileUpload(props) {
 
   return (
     <div className="container">
-      <h3>Upload your fasta file here</h3>
+      <h3>Upload your vcf file here</h3>
       <div className="form-group">
         <ToastContainer />
       </div>
