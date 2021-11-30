@@ -1,6 +1,6 @@
 // see https://programmingwithmosh.com/javascript/react-file-upload-proper-server-side-nodejs-easy/ for help
 
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import {Progress} from 'reactstrap';
 import { ToastContainer, toast } from 'react-toastify';
@@ -12,10 +12,6 @@ function FileUpload(props) {
   const [isFileUploaded, setIsFileUploaded] = useState(false);
   const [isFileAnalyzed, setIsFileAnalyzed] = useState(false);
   const [loaded, setLoaded] = useState(0);
-
-  // window.onload = () => {
-  //   fetch('http://localhost:7000/clean');
-  // };
 
   const changeHandler = (event) => {
     // event.target.files is an object that contains the details of the files selected
@@ -75,11 +71,6 @@ function FileUpload(props) {
     }
     return true;
   }
-
-  // clean './public' when refreshing the page
-  useEffect(() => {
-    fetch('http://localhost:7000/clean');
-  }, [])
 
   return (
     <div className="container">

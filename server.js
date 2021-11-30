@@ -39,14 +39,49 @@ app.get('/', (req, res) => {
 // write ./public/temp/update.json for auspice to display the new tree
 app.get('/tree', (req, res) => {
   try {
+    // read the tree
     const content = fs.readFileSync(__dirname + '/public/temp/uncondensed-final-tree.nh');
-    const auspiceJson = newickToAuspiceJson('tree', content.toString(), 'merged.sorted.bam');
+  
+    // get a list of newly added nodes
+    const stats = fs.readFileSync(__dirname + '/public/temp/placement_stats.tsv');
+    const lines = stats.toString().split('\n');
+    var nodes = [];
+    for (var i = 0; i < lines.length; i++) { 
+      nodes.push(lines[i].split('\t')[0]);    
+    }
+    nodes.pop();
+
+    // convert newick to json
+    const auspiceJson = newickToAuspiceJson('tree', content.toString(), nodes);
+
+    // create json file
+    if (fs.existsSync(__dirname + '/public/temp/update.json')) {
+      // remove update.json if it already exists
+      fs.unlinkSync(__dirname + '/public/temp/update.json');
+    }
     fs.writeFileSync(__dirname + '/public/temp/update.json', JSON.stringify(auspiceJson), (error) => {
       if (error) {
         console.log(error);
       }
     });
     return res.end(content.toString());
+  } catch (err) {
+    return res.end();
+  }
+});
+
+// read './public/temp/placement_stats.tsv' and 
+//   return a list of newly added node names
+app.get('/nodes', (req, res) => {
+  try {
+    const content = fs.readFileSync(__dirname + '/public/temp/placement_stats.tsv');
+    const lines = content.toString().split('\n');
+    var result = [];
+    for (var i = 0; i < lines.length; i++) { 
+      result.push(lines[i].split('\t')[0]);    
+    }
+    result.pop();
+    return res.send(result);
   } catch (err) {
     return res.end();
   }
