@@ -43,9 +43,9 @@ _Note: (a) You need to have the usher container in docker running for this butto
 
 ### TODO
 
-1. create a 'help' button on the web page that explains how to use the web app
+1. complete Docs page
 
-2. make the tree bigger
+2. Complete My data page
 
 3. color the newly added node in the new tree
 

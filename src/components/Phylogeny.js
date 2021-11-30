@@ -9,14 +9,14 @@ import {
   createOnViewSubtreePlugin,
   createOnRedrawReRootTreePlugin,
 } from 'react-phylogeny-tree/lib/plugins';
-import {useLeafSubtree, useAutoResize} from 'react-phylogeny-tree/lib/hooks';
+//import {useLeafSubtree, useAutoResize} from 'react-phylogeny-tree/lib/hooks';
 import 'react-phylogeny-tree/lib/css/zoom.css'; // in next.js css imports might need to go to pages/_app.js
 import '@mkoliba/phylogeny-tree-plugin-context-menu/styles.css';
 import '@mkoliba/phylogeny-tree-plugin-interactions/styles.css';
 import { toast } from 'react-toastify';
 import details from '../data/details.js';
  
-const hooks = [useLeafSubtree, useAutoResize];  
+const hooks = [];  
  
 function Phylogeny(props) {
   const [highlighted, setHighlighted] = useState(['A']);
@@ -31,6 +31,7 @@ function Phylogeny(props) {
       leafSubtree: { leafID: subtreeID, noLevels: 1, minLeafToRootLength: 0 },
       tooltipContent: (node) => {
         const id = node.id;
+        // show detailed information of nodes
         return `id: ${id}<br>
           branch length: ${node.branchLength}<br>
           date: ${details.find(x => x.strain === id).date}<br>
@@ -60,15 +61,16 @@ function Phylogeny(props) {
       })
     ];
   }, []);
- 
+//
+// when 'Update tree' is clicked
 const handleUpdate = () => {
   fetch('http://localhost:7000/tree')
   .then(res => { return res.text() })
   .then(result => {
     if (result === '') {
       toast.error('No update available');
-    } else {
-      setNewick(result);
+    } else {            
+      setNewick(result);       
       toast.success('Update complete');
     }
   })
@@ -97,8 +99,8 @@ const handleUpdate = () => {
             options={options}
             hooks={hooks}
             plugins={plugins}
-            interactive={true}
-            zoom
+            interactive
+            zoom={false}
           />
         </div>
       </div>
