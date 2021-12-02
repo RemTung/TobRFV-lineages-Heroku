@@ -50,7 +50,6 @@ For Mac/Linux:
 2. kill -9 {the PID found in step 1}
 
 For Windows:
-(run in Command Prompt as administrator)
 
 1.netstat -ano|findstr "PID :7000"
 
