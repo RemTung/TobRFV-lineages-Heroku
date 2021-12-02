@@ -51,9 +51,9 @@ For Mac/Linux:
 
 For Windows:
 
-1.netstat -ano|findstr "PID :7000"
+   1.netstat -ano|findstr "PID :7000"
 
-2.taskkill /pid {the PID found in step 1} /f
+   2.taskkill /pid {the PID found in step 1} /f
 
 ### TODO
 
