@@ -37,9 +37,9 @@ function Navbar() {
           </div>
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
             <li className='nav-item'>
-              <Link to='/Docs' className='nav-links' onClick={closeMobileMenu}>
+              <a href='http://localhost:5000' target="_blank" rel="noopener noreferrer" className='nav-links' onClick={closeMobileMenu}>
                 Docs
-              </Link>
+              </a>
             </li>
             <li className='nav-item'>
               <Link

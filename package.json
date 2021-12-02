@@ -29,7 +29,7 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
-    "start": "npm run build && concurrently --kill-others \"node server\" \"react-scripts start\" \"auspice view --datasetDir public\\temp\"",
+    "start": "npm run build && concurrently --kill-others \"node server\" \"react-scripts start\" \"auspice view --datasetDir public\\temp\" \"honkit serve --port 5000 ./tobrfv-docs\"",
     "build": "rm -rf public\\temp && mkdir public\\temp && cp public\\global_assignments.pb public\\temp\\global_assignments.pb && cp public\\nextstrain-ToBRFV_20191231_meta.json public\\temp\\nextstrain-ToBRFV_20191231_meta.json && cp public\\nextstrain-ToBRFV_20191231_tree.json public\\temp\\nextstrain-ToBRFV_20191231_tree.json",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -51,5 +51,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "honkit": "^3.6.23"
   }
 }
