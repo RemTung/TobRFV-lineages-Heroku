@@ -43,13 +43,13 @@
 
 ### How to deal with "Error: address already in use"
 
-#For Mac/Linux:
+For Mac/Linux:
 
 1. lsof -i tcp:7000
 
 2. kill -9 {the PID found in step 1}
 
-#For Windows:
+For Windows:
 
 1.netstat -ano|findstr "PID :7000"
 
