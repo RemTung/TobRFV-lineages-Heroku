@@ -1,7 +1,6 @@
 import React from 'react';
 import '../App.css';
 import { Button } from './Button';
-import { ButtonTwo } from './Button';
 import './HeroSection.css';
 
 function HeroSection() {
@@ -16,16 +15,8 @@ function HeroSection() {
           buttonStyle='btn--outline'
           buttonSize='btn--large'
         >
-          UPLOAD    <i class="fas fa-arrow-circle-up"></i>
+          UPLOAD MY DATA   <i class="fas fa-arrow-circle-up"></i>
         </Button>
-        <ButtonTwo
-          className='btns'
-          buttonStyle='btn--primary'
-          buttonSize='btn--large'
-          onClick={console.log('hey')}
-        >
-          WATCH TUTORIAL <i className='far fa-play-circle' />
-        </ButtonTwo>
       </div>
     </div>
   );

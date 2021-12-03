@@ -1,5 +1,6 @@
 import React from 'react'
 import '../../App.css'
+import PlacementStat from '../PlacementStat';
 
 export default function MyData() {
 
@@ -8,5 +9,5 @@ export default function MyData() {
     fetch('http://localhost:7000/clean');
   };
 
-    return <h1 className='mydata'>MYDATA</h1>
+    return <PlacementStat />
 }

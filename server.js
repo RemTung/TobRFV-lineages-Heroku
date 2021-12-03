@@ -70,6 +70,26 @@ app.get('/tree', (req, res) => {
   }
 });
 
+// read './public/temp/placement_stats.tsv' and
+//   return a list of objects representing each node
+app.get('/stat', (req, res) => {
+  try {
+    const content = fs.readFileSync(__dirname + '/public/temp/placement_stats.tsv');
+    const lines = content.toString().split('\n');
+    var result = [];
+    for (var i = 0; i < lines.length -  1; i++) { 
+      var node = {};
+      node.id = lines[i].split('\t')[0];
+      node.parsimony_score = lines[i].split('\t')[1];
+      node.num_parsimony_optimal_placements = lines[i].split('\t')[2];
+      result.push(node);    
+    }
+    return res.send(result);
+  } catch (err) {
+    return res.end();
+  }  
+})
+
 // read './public/temp/placement_stats.tsv' and 
 //   return a list of newly added node names
 app.get('/nodes', (req, res) => {

@@ -9,8 +9,8 @@
    docker build --no-cache -t usher install/
 
    docker run -p 8000:8000 -v "{the directory you downloaded the program}\ToBRFV-lineages\public:/HOME/usher/data" -t -i usher /bin/bash
-    *If you are a Windows User, the above line must be run in PowerShell
-    
+   \*If you are a Windows User, the above line must be run in PowerShell
+
 2. Rename the newly created docker container to "usher"
 
    docker rename <orignal_name> usher
@@ -54,13 +54,3 @@ For Windows:
 1.netstat -ano|findstr "PID :7000"
 
 2.taskkill /pid {the PID found in step 1} /f
-
-### TODO
-
-1. complete Docs page
-
-2. Complete My data page
-
-3. color the newly added node in the new tree
-
-4. convert fasta to vcf

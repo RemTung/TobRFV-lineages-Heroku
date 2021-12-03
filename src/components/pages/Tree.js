@@ -1,4 +1,6 @@
 import React, {useState, useRef} from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../../App.css'
 import PhylocanvasTree from '../PhylocanvasTree';
 
@@ -18,14 +20,16 @@ export default function Tree() {
       .then(res => { return res.text() })
       .then(result => {
         if (result !== '') {            
-          setNewick(result);       
+          setNewick(result);
         }
       }) 
       
       // set style for the update
       fetch('http://localhost:7000/nodes')
       .then(res => {return res.json()})
+      .catch(error => {toast.error('Please upload a file first')})
       .then(result => {
+        if (!result) return;
         let new_style = {};
         for (var i = 0; i < Object.keys(result).length; i++) {
           new_style[result[i]] = {fillColour: "red", shape: 'star'};
@@ -35,7 +39,8 @@ export default function Tree() {
     }
 
     return (
-      <div className="container-fluid">    
+      <div className="container-fluid">  
+        <ToastContainer />  
         <h3>Phylogenetic Tree</h3> 
 
         <a href="http://localhost:4000"
